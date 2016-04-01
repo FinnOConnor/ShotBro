@@ -15,7 +15,7 @@ public class CreateProject extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_project);
-        Intent activityThatCalled = getIntent();
+//        Intent activityThatCalled = getIntent();
     }
 
 

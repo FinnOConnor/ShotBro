@@ -1,32 +1,24 @@
 package nz.co.couchkumaras.shotmate;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
-import android.widget.GridLayout.LayoutParams;
+
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
-    private ArrayList<String> attrs = new ArrayList<String>();
+    private ArrayList<ProjectInfo> projects = new ArrayList<ProjectInfo>();
 
 
     @Override
@@ -53,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Open CreateProject Activity
+                Log.d("HIASd", "JHOASD");
                 createProject();
+
             }
         });
 
@@ -66,27 +60,37 @@ public class MainActivity extends AppCompatActivity {
     public void createProject(){
         Intent createProjectIntent = new Intent(this, CreateProject.class);
         final int result = 1;
-
         startActivityForResult(createProjectIntent, result);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        String projectNameSentBack = data.getStringExtra("projectName");
-        String projectDirectorSentBack = data.getStringExtra("projectDirector");
-        String projectDateSentBack = data.getStringExtra("projectDate");
+        switch(requestCode){
+            case 1:
+                String projectNameSentBack = data.getStringExtra("projectName");
+                String projectDirectorSentBack = data.getStringExtra("projectDirector");
+                String projectDateSentBack = data.getStringExtra("projectDate");
 
-        ListView projectList = (ListView) findViewById(R.id.project_list);
+                RecyclerView projectList = (RecyclerView) findViewById(R.id.project_list);
+                LinearLayoutManager llm = new LinearLayoutManager(this);
+                llm.setOrientation(LinearLayoutManager.VERTICAL);
+                projectList.setLayoutManager(llm);
 
-        attrs.add(projectNameSentBack);
-        attrs.add(projectDirectorSentBack);
-        attrs.add(projectDateSentBack);
+                ProjectInfo pi = new ProjectInfo();
+                pi.name = projectNameSentBack;
+                pi.director = projectDirectorSentBack;
+                pi.date = projectDateSentBack;
 
-        CustomAdapter adapter = new CustomAdapter(this, attrs);
+                projects.add(pi);
 
-        projectList.setAdapter(adapter);
+                ProjectAdapter pa = new ProjectAdapter(projects);
+                projectList.setAdapter(pa);
+
+                break;
+        }
 
     }
 
