@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Shot Mate/Shot Mate.iml" filepath="$PROJECT_DIR$/Shot Mate/Shot Mate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ShotMate.iml" filepath="$PROJECT_DIR$/ShotMate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ShotBro.iml" filepath="$PROJECT_DIR$/ShotBro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
 </project>
